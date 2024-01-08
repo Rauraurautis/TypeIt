@@ -1,4 +1,4 @@
-import { CollectionReference, DocumentData, addDoc, collection, getDocs, orderBy, query } from "firebase/firestore";
+import { CollectionReference, DocumentData, addDoc, collection, endAt, getDocs, limit, orderBy, query, startAt } from "firebase/firestore";
 import { db } from "./firebase";
 import { Difficulty, PlayerScoreData } from "../types";
 import { Score } from "../../components/fallingwords/FallingWordLeaderboard";
@@ -14,7 +14,7 @@ const wpmCollection = collection(db, "wpmscores")
 
 export const getWordfallScores = async (difficulty: Difficulty) => {
     try {
-        const q = query(wordfallCollections[difficulty], orderBy("player.score", "desc"))
+        const q = query(wordfallCollections[difficulty], orderBy("player.score", "desc"), limit(5))
         const snapshot = await getDocs(q)
         console.log(snapshot)
         const data: Score[] = []
