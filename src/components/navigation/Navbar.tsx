@@ -1,13 +1,7 @@
-import { FC, useRef, useState } from 'react'
 import NavPages from './NavPages'
-import DifficultySelection from '../ui/DifficultySelection'
-import { Difficulty, Gamemode } from '../../lib/types'
-import hamburgerImage from '../../assets/images/hamburger.png';
-import Menu from './DropDownMenu';
 import DropDownMenu from './DropDownMenu';
 import ThemeSelect from './ThemeSelect';
 import logo from "../../assets/images/logo.png"
-import { useTheme } from '../../lib/context/ThemeContext';
 
 
 

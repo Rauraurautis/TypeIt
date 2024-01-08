@@ -20,3 +20,4 @@ const IndexPage: FC = ({ }) => {
 }
 
 export default IndexPage
+

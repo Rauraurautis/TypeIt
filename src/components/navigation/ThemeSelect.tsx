@@ -1,5 +1,5 @@
-import { FC, useMemo, useState } from 'react'
-import { Theme, ThemeName, themes, useTheme } from '../../lib/context/ThemeContext'
+import { FC, useMemo } from 'react'
+import { ThemeName, themes, useTheme } from '../../lib/context/ThemeContext'
 import useDropdown from '../../hooks/useDropdown'
 
 interface ThemeSelectProps {

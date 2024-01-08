@@ -7,12 +7,6 @@ import { isPage } from '../../lib/util'
 
 
 const buttonStyle = "bg-cyan-500 p-3 cursor-pointer hover:bg-opacity-50"
-const difficulties = ["easy", "medium", "hard"]
-const diffColors = {
-    easy: "bg-green-700",
-    medium: "bg-yellow-700",
-    hard: "bg-red-700"
-}
 
 const DropDownMenu = () => {
     const { pathname } = useLocation()
