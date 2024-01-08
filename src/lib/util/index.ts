@@ -1,12 +1,12 @@
 import { faker } from "@faker-js/faker"
-import { Difficulty, Word } from "./types"
+import { Difficulty, Word } from "../types"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
-  }
-  
+}
+
 
 export const isPage = (name: string, location: string) => {
     return name === location
@@ -16,19 +16,49 @@ export const isLetter = (input: string) => {
     return input.length === 1
 }
 
-export const generateNewWord = () => {
-    return faker.word.words(1)
+const amountPerDifficulty: Record<Difficulty, number> = {
+    easy: 4,
+    medium: 6,
+    hard: 9
 }
 
-const wordsPerDifficulty = {
-    easy: 10,
-    medium: 25,
-    hard: 50
+export const generateNewWord = (difficulty: Difficulty, allWords: Word[]) => {
+    let word = ""
+    const wordLength = amountPerDifficulty[difficulty]
+    while (!word) {
+        const newWord = faker.word.words(1)
+        if (newWord.length === wordLength && !allWords.some(word => word.word === newWord)) {
+            word = newWord
+        }
+    }
+
+    return word
 }
 
-export const generateWords = (amount: number) => {
-    
+
+export const generateWords = (amount: number, difficulty?: Difficulty) => {
+    if (difficulty) {
+        const words = []
+        const maxWordLength = amountPerDifficulty[difficulty]
+        while (words.length < 15) {
+            const word = faker.word.words(1)
+            if (word.length === maxWordLength) {
+                words.push(word)
+            }
+        }
+        return words.join(" ")
+    }
     return faker.word.words(amount)
+}
+
+export const calculateWords = (typedWords: string, lastGeneratedWords: string) => {
+    const typedWordsArr = typedWords.split(" ")
+    const lastGeneratedWordsArr = lastGeneratedWords.split(" ")
+    if (!lastGeneratedWordsArr.includes(typedWordsArr[typedWordsArr.length - 1])) {
+        return typedWordsArr.length - 1
+    }
+    return typedWordsArr.length
+
 }
 
 export const lettersMatch = (firstLetters: string[], secondLetters: string[]) => {

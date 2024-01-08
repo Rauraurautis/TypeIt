@@ -25,3 +25,18 @@ code {
     top: 95%;
   }
 }
+
+@keyframes textGrow {
+  0% {
+    font-size: 1.875rem;
+    opacity: 1;
+  }
+  50% {
+    font-size: 3rem; /* Change this value to your desired larger size */
+    opacity: 0.5;    /* Change this value to your desired opacity */
+  }
+  100% {
+    font-size: 5rem; /* Change this value to your final larger size */
+    opacity: 0;      /* Change this value to your desired final opacity */
+  }
+}

@@ -1,6 +1,6 @@
 import { FC, MutableRefObject, SetStateAction, useRef, useState } from 'react'
 import hamburgerImage from '../../assets/images/hamburger.png';
-import { Difficulty, Gamemode } from '../../lib/util/types'
+import { Difficulty, Gamemode } from '../../lib/types'
 import { Link, useLocation } from 'react-router-dom'
 import { isPage } from '../../lib/util'
 

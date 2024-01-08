@@ -69,14 +69,25 @@ module.exports = {
         "fadeIn": {
           from: { opacity: 0 },
           to: { opacity: 1 },
+        },
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-6deg)' },
+          '50%': { transform: 'rotate(6deg)' },
+        },
+        sizeUp: {
+          '0%': { fontSize: '200px' },
+          '100%': { fontSize: '20px' },
         }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.35s ease-out",
-        "fadeIn": "fadeIn 0.5s ease-out"
+        "fadeIn": "fadeIn 0.5s ease-out",
+        "wiggle": 'wiggle 0.5s ease-in-out infinite',
+        "sizeUp": "sizeUp 0.5s linear forwards "
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require('tailwind-scrollbar')],
+  
 }

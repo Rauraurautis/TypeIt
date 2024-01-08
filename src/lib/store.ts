@@ -1,5 +1,5 @@
 import zustand, { create } from "zustand";
-import { Difficulty, Word } from "./util/types";
+import { Difficulty, Word } from "./types";
 import { generateWords } from "./util";
 
 interface WordfallStore {
@@ -22,7 +22,12 @@ const useWordfallStore = create<WordfallStore>((set, get) => ({
         set(state => ({ ...state, difficulty }))
     },
     setGameRunning(gameRunning: boolean) {
-        set(state => ({ ...state, gameRunning }))
+        if (!gameRunning) {
+            set(state => ({ ...state, allWords: [], successfulWords: [], gameRunning }))
+        } else {
+            set(state => ({ ...state, gameRunning }))
+        }
+
     },
     setAllWords(words: Word[]) {
         set(state => ({ ...state, allWords: words }))
@@ -34,20 +39,21 @@ const useWordfallStore = create<WordfallStore>((set, get) => ({
 }))
 
 interface WpmStore {
-    generatedWords: string[]
+    generatedWords: string
     gameRunning: boolean
     generateWords: (amount: number) => void
     setGameRunning: (gameRunning: boolean) => void
 }
 
 const useWpmStore = create<WpmStore>((set, get) => ({
-    generatedWords: [],
+    generatedWords: "",
     gameRunning: false,
     setGameRunning(gameRunning: boolean) {
+
         set(state => ({ ...state, gameRunning }))
     },
     generateWords(amount: number) {
-        const words = generateWords(amount).split(" ")
+        const words = generateWords(amount)
         set(state => ({ ...state, generatedWords: words }))
     }
 

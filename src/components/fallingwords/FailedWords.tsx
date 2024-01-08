@@ -1,15 +1,15 @@
 import { FC } from 'react'
 import { getNewestWord } from '../../lib/util'
-import { Word } from '../../lib/util/types'
-import { useWordfallStore } from '../../lib/store'
+import { Word } from '../../lib/types'
 
 
 interface FailedWordsProps {
-   
+    allWords: Word[]
+    successfulWords: Word[]
+    gameRunning: boolean
 }
 
-const FailedWords: FC<FailedWordsProps> = () => {
-    const {allWords, successfulWords, gameRunning} = useWordfallStore()
+const FailedWords: FC<FailedWordsProps> = ({ allWords, successfulWords, gameRunning }) => {
 
     return (
         <>
