@@ -1,10 +1,11 @@
-import { FC} from 'react'
+import { FC } from 'react'
+
 
 const IndexPage: FC = ({ }) => {
 
   return (
     <div className={`flex flex-col items-center justify-center h-full w-full animate-fadeIn`}>
-      
+
       <div className="bg-black bg-opacity-10 w-[40%] min-w-[300px] p-2 text-center flex flex-col gap-2">
         <div className="w-full flex justify-center">
           <h1 className="text-2xl">Welcome to TypeIt!</h1>

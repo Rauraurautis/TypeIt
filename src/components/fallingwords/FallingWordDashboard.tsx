@@ -30,7 +30,7 @@ const FallingWordDashboard: FC<FallingWordDashboardProps> = ({ difficulty, succe
 
             {leaderboardOpen &&
                 <div className="absolute z-20">
-                    <FallingWordLeaderboard toggleLeaderboard={toggleLeaderboard} dialogRef={dialogRef} />
+                    <FallingWordLeaderboard toggleLeaderboard={toggleLeaderboard} />
                 </div>}
 
             <PlayerDialog>

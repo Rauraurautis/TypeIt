@@ -1,4 +1,4 @@
-import { CollectionReference, DocumentData, addDoc, collection, endAt, getDocs, limit, orderBy, query, startAt } from "firebase/firestore";
+import { CollectionReference, DocumentData, QueryDocumentSnapshot, addDoc, collection, endAt, getDocs, limit, orderBy, query, startAfter, startAt } from "firebase/firestore";
 import { db } from "./firebase";
 import { Difficulty, PlayerScoreData } from "../types";
 import { Score } from "../../components/fallingwords/FallingWordLeaderboard";
@@ -26,6 +26,8 @@ export const getWordfallScores = async (difficulty: Difficulty) => {
     }
 }
 
+
+
 export const addWordfallScore = async (difficulty: Difficulty, data: PlayerScoreData) => {
     try {
         const docRef = await addDoc(wordfallCollections[difficulty], { player: data })
@@ -35,11 +37,27 @@ export const addWordfallScore = async (difficulty: Difficulty, data: PlayerScore
     }
 }
 
+export const getNextWordfallBatch = async (difficulty: Difficulty, previousKey?: QueryDocumentSnapshot<DocumentData, DocumentData>) => {
+    try {
+        const q = previousKey ? query(wordfallCollections[difficulty], orderBy("player.score", "desc"), limit(3), startAfter(previousKey)) : query(wordfallCollections[difficulty], orderBy("player.score", "desc"), limit(5))
+        const snapshot = await getDocs(q)
+        const data: Score[] = []
+        const docs = snapshot.docs
+        const key = docs[snapshot.docs.length - 1]
+        //@ts-ignore
+        snapshot.forEach(doc => data.push(doc.data()))
+        return { data, key, docs }
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 export const getWpmScores = async () => {
     try {
 
         const q = query(wpmCollection, orderBy("player.score", "desc"))
         const snapshot = await getDocs(q)
+        console.log(snapshot.docs[snapshot.docs.length - 1])
         const data: Score[] = []
         //@ts-ignore
         snapshot.forEach(doc => data.push(doc.data()))
@@ -55,5 +73,20 @@ export const addWpmScore = async (data: PlayerScoreData) => {
         return docRef
     } catch (error) {
         console.error(`Error adding document: ${error}`)
+    }
+}
+
+export const getNextWpmBatch = async (previousKey?: QueryDocumentSnapshot<DocumentData, DocumentData>) => {
+    try {
+        const q = previousKey ? query(wpmCollection, orderBy("player.score", "desc"), limit(3), startAfter(previousKey)) : query(wpmCollection, orderBy("player.score", "desc"), limit(5))
+        const snapshot = await getDocs(q)
+        const data: Score[] = []
+        const docs = snapshot.docs
+        const key = docs[snapshot.docs.length - 1]
+        //@ts-ignore
+        snapshot.forEach(doc => data.push(doc.data()))
+        return { data, key, docs }
+    } catch (error) {
+        console.error(error)
     }
 }
